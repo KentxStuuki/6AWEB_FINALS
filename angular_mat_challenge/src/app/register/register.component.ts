@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import  { FormGroup, FormControl, Validators, FormsModule } from '@angular/forms';
 
 
+
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,6 +27,8 @@ interface Platform {
   standalone: true,
   imports: [
     CommonModule,
+    MatDividerModule,
+    MatListModule,
     ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -37,7 +42,8 @@ interface Platform {
     MatSelectModule
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
   Platforms: Platform[] = [
@@ -49,36 +55,35 @@ export class RegisterComponent {
   email: string = "";
   password: string = "";
   birthDate!: Date;
+  gameskill: number = 0;
   submitted = false;
+  minSkillLevel = 1;
+  maxSkillLevel = 10;
 
   formdata: FormGroup = new FormGroup({
     userName: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     birthDate: new FormControl(null, [Validators.required]),
-  })
+    platform: new FormControl('', [Validators.required]), 
+    gameskill: new FormControl(5)
+  });
+  
 Platform: any;
 
-  OnclickSubmit(data: {
-    angularSkillLevel: number;
-    userName: string;
-    email: string;
-    password: string;
-    birthDate: Date;
-  })
-
-  {
+  OnclickSubmit(data: any) {
+    this.gameskill = data.gameskill;
     this.submitted = true;
     this.userName = data.userName;
     this.email = data.email;
     this.password = data.password;
     this.birthDate = data.birthDate;
-
+    this.Platform = data.platform;
 
     if (this.formdata.valid) {
       console.log("Form Submitted!", this.formdata.value);
     } else {
-      console.log("Form is not valid!")
+      console.log("Form is not valid!");
     }
   }
 }

@@ -1,27 +1,20 @@
-<div class="main">
-    <img src="assets/sojurn.jpg" alt="sojourn image">
 
-    <div class="bgcontainer"></div>
-    <div class="form-container">
-        <div class="description">
-        <h4>OPT-IN FOR THE BETA</h4>
-        <h5>A new age of heroes is just beginning. To hide make Overwatch 2 the best game it can be. we're inviding you to sign up to participate in a beta test for PC, Xbox Series XJS, Xbox One, PlayStation 4. Each account can only opt-in once, choose you preferred platform below to request access.</h5>
-        </div>
-        
+<div class="description">
+    
+    <h4>OPT-IN FOR THE BETA</h4>
+    <h5>A new age of heroes is just beginning. To hide make Overwatch 2 the best game it can be. we're inviding you to sign up to participate in a beta test for PC, Xbox Series XJS, Xbox One, PlayStation 4. Each account can only opt-in once, choose you preferred platform below to request access.</h5>
+</div>
+
+<div class="form-container">
+<h6>Please Sign up this form</h6>
+
+    <div class="user-form">
         <form [formGroup]="formdata" (ngSubmit)="OnclickSubmit(formdata.value)">
-            <mat-form-field>
-                <mat-label>PLATFORM</mat-label>
-                <mat-select>
-                  @for (Platform of Platforms; track Platform) {
-                    <mat-option [value]="Platform.value">{{Platform.viewValue}}</mat-option>
-                  }
-                </mat-select>
-              </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Username</mat-label>
                 <input matInput placeholder="Enter Text" formControlName="userName">
             </mat-form-field>
-    
+
             <mat-form-field appearance="fill">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" placeholder="Enter Email"  formControlName="email">
@@ -29,13 +22,24 @@
                     Email is required and must be a valid email.
                 </mat-error>
             </mat-form-field>
-    
+
             <mat-form-field appearance="fill">
                 <mat-label>Password</mat-label>
                 <input matInput type="password" placeholder="Enter password"  formControlName="password">
                 <mat-error *ngIf="formdata.controls['password'].invalid && formdata.controls['password'].touched">
                     Password is required and must be at least 8 character long.
                 </mat-error>
+            </mat-form-field>
+        </form>
+        <form [formGroup]="formdata" (ngSubmit)="OnclickSubmit(formdata.value)">
+
+            <mat-form-field>
+                <mat-label>PLATFORM</mat-label>
+                <mat-select formControlName="platform">
+                    <mat-option *ngFor="let platform of Platforms" [value]="platform.value">
+                        {{ platform.viewValue }}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
@@ -47,19 +51,36 @@
                     Birth date is required.
                 </mat-error>
             </mat-form-field>
-    
+
+            <div class="slider-group">
+                <label class="slider-label"> Skill Level: {{ formdata.get('angularSkillLevel')?.value }}</label>
+                <mat-slider [min]="minSkillLevel" [max]="maxSkillLevel" [step]="1" [discrete]="true">
+                    <input matSliderThumb formControlName="angularSkillLevel">
+                </mat-slider>
+            </div>
             <button mat-raised-button color="primary" type="submit" >
                 Register Now
             </button>
         </form>
     </div>
+   
 </div>
+
 <div class="output">
-    <p *ngIf="submitted">
-        You have entered: <br>
-        Username: {{userName}} <br>
-        Email: {{email}} <br>
-        Password: {{ password }} <br>
-        Birthday: {{ birthDate }} <br>
-    </p>
+    <mat-list>
+        <mat-list-item> <h6>Inputed Values</h6></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  Platform: {{ formdata.value.platform }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Username: {{userName}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Email: {{email}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Password: {{ password }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>  Birthday: {{ birthDate | date:'shortDate' }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Skill Level: {{ gameskill }}</mat-list-item>
+        <mat-divider></mat-divider>
+    </mat-list>
 </div>

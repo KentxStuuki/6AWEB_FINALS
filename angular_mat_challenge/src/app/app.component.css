@@ -1,0 +1,19 @@
+.header-main{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.darkmode {
+    margin: 0 0 0 42%;
+}
+
+mat-slide-toggle{
+    padding: 10px;
+}
+
+footer{
+    text-align: center;
+}
+
+
